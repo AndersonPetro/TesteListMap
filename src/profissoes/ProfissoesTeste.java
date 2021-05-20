@@ -6,10 +6,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 
 public class ProfissoesTeste {
 
@@ -42,6 +44,7 @@ public class ProfissoesTeste {
                 .filter(person -> person.getSex().equals(SexEnum.FEMALE))
                 .map(person -> person.getName())
                 .map(String::toUpperCase)
+                .sorted(Comparator.naturalOrder())
                 .collect(Collectors.toList());
 
         namefemale.forEach(System.out::println);
@@ -51,7 +54,7 @@ public class ProfissoesTeste {
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
-        System.out.println("salary");
+        System.out.println("SALARIO ");
         salary.forEach(System.out::println);
 
         List<String> ordemAlfabetica = people.stream()
@@ -69,13 +72,70 @@ public class ProfissoesTeste {
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
-        System.out.println("Ordem salary");
+        System.out.println("Ordem salario");
         ordemSalary.forEach(System.out::println);
 
-        List<BigDecimal> highestSalary = people.stream()
+        //ESTA CERTO TAMBEM
+   //     BigDecimal highestSalary = people.stream()
+     //           .filter(person -> person.getProfessional().getName().equals("DESENVOLVEDOR"))
+       //         .map(person -> person.getProfessional().getSalary())
+         //       .max(BigDecimal::compareTo)
+           //     .get();
+
+
+        //System.out.println("Teste salario maior Desenvolvedor " + highestSalary);
+
+        //trazer salarios  de cada profissao pedida
+        people.stream()
+                .filter(person -> person.getProfessional().getName().equals("DESENVOLVEDOR"))
                 .map(person -> person.getProfessional().getSalary())
-                .map(Professional -> Professional.)
-                .limit(3);
+                .max(BigDecimal::compareTo)
+                .stream().forEach(val -> System.out.println("Maior Salario do Desenvolvedor: " + val));
+
+        people.stream()
+                .filter(person -> person.getProfessional().getName().equals("GERENTE"))
+                .map(person -> person.getProfessional().getSalary())
+                .max((x1,x2) -> x1 .compareTo(x2))
+                .stream().forEach(val -> System.out.println("Maior Salario de Gerente: " + val));
+
+        people.stream()
+                .filter(person -> person.getProfessional().getName().equals("ANALISTA"))
+                .map(person -> person.getProfessional().getSalary())
+                .max((x1,x2)  -> x1.compareTo(x2))
+                .stream().forEach(val -> System.out.println("Maior Salario de Analista: " + val));
+
+
+
+        //Buscar os 5 maiores salarios da profissao DESENVOLVEDOR
+        //OBS: equals sendo o objeto ou nao escrita dele deve ser igual
+        System.out.println("5 maiores salarios de Analista");
+        people.stream()
+                .filter(person -> person.getProfessional().getName().equals("ANALISTA"))
+                .map(person -> person.getProfessional().getSalary())
+                .sorted(Comparator.reverseOrder() )
+                .limit(5).forEach(System.out::println);
+
+        //trazeer 3 primeiros profissionais que tenham o nome que comeca com a letra "a" e "r".
+
+       // people.stream()
+        //        .filter(person -> person.getProfessional().getName().equals("A" "R"))
+        //        .
+
+
+
+
+     //   people.stream()
+       //         .filter(person -> person.getProfessional().getName().equals("Analista"))
+         //       .map(person -> person.getProfessional().getSalary())
+         //       .limit(5)
+          //      .max(BigDecimal::compareTo)
+           //     .stream().forEach(val -> System.out.println("5 maiores salarios de Analista: " + val));
+
+
+
+               //.forEach(val -> System.out.println("5 Maiores salarios Analista: " + val ));
+
+
 
 
 
